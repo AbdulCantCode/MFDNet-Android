@@ -1,0 +1,57 @@
+# Built application files
+*.apk
+*.ap_
+*.aab
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Gradle
+.gradle/
+build/
+*/build/
+gradle-app.setting
+
+# IDE defaults
+.idea/
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+*.iml
+.DS_Store
+
+# Mac OS specific
+.DS_Store
+*.swp
+*~
+*.log
+
+# NDK
+obj/
+
+# Keystore files
+*.jks
+*.keystore
+
+# Python, AI/ML models & Datasets specific to this local env
+.venv/
+__pycache__/
+*.pth
+*.onnx
+checkpoints/
+data/
+outputs/
+test_images/
+denoised_output/
+results/
+PolyU_Val/
+SIDD/
+diff_map.png
+__MACOSX/
+
+# IMPORTANT: Keep exactly what we need
+!MFDNet.mlpackage/
+!app-release.apk

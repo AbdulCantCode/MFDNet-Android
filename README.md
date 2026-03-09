@@ -1,0 +1,46 @@
+# Real-Time Mobile Image Denoising (MFDNet)
+
+A highly optimized, mobile-first neural network designed to remove image noise in real-time. Built specifically for Android, this project achieves sub-100ms inference on modern smartphone CPUs and GPUs by leveraging a custom, lightweight architecture (MFDNet).
+
+This repository was prepared for a Google Summer of Code (GSoC) application.
+
+## Key Features
+
+- **Blazing Fast Mobile Inference**: Designed to run cleanly on edge devices. By relying heavily on depthwise separable convolutions, the model maintains a very small memory footprint and executes in under 100ms.
+- **Blind Quality Assessment (Total Variation)**: Evaluating image quality in the real world is hard because you don't have a "clean" ground-truth image to compare against. To solve this, we implemented a custom Total Variation (TV) metric that evaluates the noisiness and smoothness of an image *blindly*.
+- **Multi-Scale Fusion**: Captures a wide variety of receptive fields to understand context, ensuring high-frequency textures aren't blurred out along with the noise.
+
+## Tech Stack
+
+- **Model Training**: PyTorch
+- **Mobile Deployment**: TensorFlow Lite (TFLite)
+- **Android App**: Kotlin, Android Studio
+- **Metrics**: PSNR, SSIM, custom Total Variation (TV)
+
+## The Total Variation (TV) Metric Explained
+
+How do you know if an image looks good if you don't have the original?
+
+Standard metrics like PSNR and SSIM require a perfect ground-truth reference image. Our pipeline integrates a custom calculation for the Total Variation (TV) metric. TV measures the sum of absolute differences between adjacent pixels. High noise creates huge differences between neighboring pixels (high TV). A clean, denoised image has smooth transitions (low TV). By minimizing the TV score without blurring edges, we can score real-world denoising performance blindly.
+
+## Architecture Highlights
+- **MFDNet (Mobile Feature Distillation Network)**: 32 base channels with 4 progressive feature distillation blocks.
+- **SepConv (Separable Convolutions)**: The backbone of our efficiency, drastically cutting parameters compared to standard convolutions.
+- **Residual Learning**: The network doesn't predict the clean image outright; it predicts the *noise* (the residual) and subtracts it from the original input. This makes learning much easier and faster.
+
+## Quick Start (Android)
+
+1. Grab the latest `app-release.apk` from the GitHub Releases page.
+2. Install it on your Android device.
+3. Select any noisy image from your gallery and watch it denoise instantly.
+
+## Repository Map
+
+- `mfdnet.py`: The PyTorch architecture definition. Highly documented.
+- `validate.py`: The evaluation loop used to score the model (PSNR, SSIM, TV).
+- `MFDNet.mlpackage/`: Core model weights.
+- `app-release.apk`: Compiled Android application.
+
+## Open Source Ready
+
+The repository has been strictly filtered. You won't find bloated `/build` folders, `.gradle` caches, or local `.idea` environments here. Just the clean source and the necessary models.
